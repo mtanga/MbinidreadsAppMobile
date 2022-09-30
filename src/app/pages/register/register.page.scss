@@ -1,0 +1,138 @@
+.header::after {
+    background-image: none;
+  }
+.grid1 {
+    height: 100%;
+    padding: 0px;
+}
+
+.white{
+    color :  #FFFFFF;
+}
+
+.contaier-login {
+    width: 90%;
+    padding: 10px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
+}
+.red{
+    background-color: #f93f31;
+}
+.yellow {
+    background-color: #e6de09;
+}
+.toolbar-background {
+    inset: 0px;
+    position: absolute;
+    transform: translateZ(0px);
+    border-width: var(--border-width);
+    border-style: var(--border-style);
+    border-color: none!important;
+    background: #e6de09!important;
+}
+
+.productHeader {
+    --background:  #b98cda!important;
+    --border-color: #b98cda!important;
+}
+
+
+.logo{
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.centerbloc{
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer{
+    background: #ac5ee6 !important;
+    border-top: 2px solid #ac5ee6 !important;
+}
+
+
+.row1 {
+    height: 50%;
+    background: #b98cda!important;
+    border-color: #b98cda!important;
+    border-style: var(--border-style);
+}
+
+.row2 {
+    height: 50%;
+    background: #b98cda!important;
+    border-top: 2px solid #b98cda;
+}
+
+ion-icon {
+    margin-right: 15px;
+}
+
+.text-primary{
+    text-align: left;
+}
+
+.langue{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-content: space-around;
+}
+
+ion-button {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.col-sm-2{
+    width: 50%;
+}
+
+ion-slide {
+    width: 100%;
+    height: 100%;
+    position: absolute !important;
+    top: 0px !important;
+}
+.reset{
+    color:#439A43;
+}
+.primary{
+
+}
+
+.round {
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: #004D3A!important;
+}
+
+h1{
+    color: #004D3A!important;
+}
+.inpur {
+    border-radius: 30px;
+}
+.header-md::after{
+    display: none;
+}
+
+.button-native{
+    box-shadow: none!important;
+}
+
+.button-primary{
+    box-shadow: none!important;
+    width: 100%!important;
+    background: #b98cda!important;
+    border-radius: 10px;
+}

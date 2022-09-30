@@ -1,0 +1,246 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{"memberships" | translate}} 
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <div class="padding-r-l-l" *ngIf="getUser()?.user?.roles[0].title=='School'">
+
+    <!-- fab placed to the bottom end -->
+    <ion-fab id="open-modal" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+
+  
+    <ion-grid class="padding-no">
+        <ion-row>
+          <ion-col size="12" class="colonne padding-no" *ngFor="let item of memberships">
+              <ion-card class="card-pay">
+               <!--  <img src="../../../assets/images/class.png" /> -->
+                <ion-card-header class="bg">
+                  <ion-card-subtitle class="text_blank">
+                    {{item.membership.name}}
+                   
+                  </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-item class="pink">
+                      <ion-label>
+                        {{"start" | translate}}  : {{formatDate(item.updated_at)}}
+                      </ion-label>
+                    </ion-item>
+                    <br>
+                    <ion-item class="pink">
+                      <ion-label>
+                        {{"end" | translate}} : {{formatDate(addDays(item.updated_at, item.membership.periode))}}
+                      </ion-label>
+                    </ion-item>
+
+                    <div style="padding-top:15px" *ngIf="item.student">
+                        <h5 style="color:white">
+                          {{"student" | translate}} : {{item.student.first_name}} {{item.student.last_name}}
+                        </h5>
+                    </div>
+                    <div style="padding-top:15px" *ngIf="item.classe">
+                      <h5 style="color:white">
+                        {{"student" | translate}} : {{item.classe.name}}
+                      </h5>
+                  </div>
+                  <div  style="float:right; background-color: white;padding-left: 10px;padding-right: 10px;">
+                    <p *ngIf="item.start=='1'" style="color: green;">{{"active" | translate}}</p>
+                    <p *ngIf="item.start=='0'" style="color: red;">{{"inactive" | translate}}</p>
+                </div>
+                </ion-card-content>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+  </div>
+
+
+
+
+
+  <div class="padding-r-l-l" *ngIf="getUser()?.user?.roles[0].title=='Parent'">
+
+    <!-- fab placed to the bottom end -->
+    <ion-fab id="open-modal" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+
+  
+    <ion-grid class="padding-no">
+        <ion-row>
+          <ion-col size="12" class="colonne padding-no" *ngFor="let item of memberships">
+              <ion-card class="card-pay">
+               <!--  <img src="../../../assets/images/class.png" /> -->
+                <ion-card-header class="bg">
+                  <ion-card-subtitle class="text_blank">
+                    {{item.membership.name}}
+                   
+                  </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-item class="pink">
+                      <ion-label>
+                        {{"start" | translate}}  : {{formatDate(item.updated_at)}}
+                      </ion-label>
+                    </ion-item>
+                    <br>
+                    <ion-item class="pink">
+                      <ion-label>
+                        {{"end" | translate}} : {{formatDate(addDays(item.updated_at, item.membership.periode))}}
+                      </ion-label>
+                    </ion-item>
+
+                    <div style="padding-top:15px" *ngIf="item.student">
+                        <h5 style="color:white">
+                          {{"student" | translate}} : {{item.student.first_name}} {{item.student.last_name}}
+                        </h5>
+                    </div>
+                    <div style="padding-top:15px" *ngIf="item.classe">
+                      <h5 style="color:white">
+                        {{"student" | translate}} : {{item.classe.name}}
+                      </h5>
+                  </div>
+                  <div  style="float:right; background-color: white;padding-left: 10px;padding-right: 10px;">
+                      <p *ngIf="item.start=='1'" style="color: green;">{{"active" | translate}}</p>
+                      <p *ngIf="item.start=='0'" style="color: red;">{{"inactive" | translate}}</p>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">{{"cancel" | translate}}</ion-button>
+          </ion-buttons>
+<!--           <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">{{"confirm" | translate}}</ion-button>
+          </ion-buttons> -->
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" *ngIf="getUser()?.user?.roles[0].title=='School'">
+
+        <ion-item class="round" >
+          <ion-label>
+            {{"membership" | translate}}
+          </ion-label>
+          <ion-select id="my-select" [(ngModel)]="membershipp"  [placeholder]='"choose_membership" | translate' 
+          (ionChange)="handleChange($event)"
+          >
+            <ion-select-option *ngFor="let item of availableMemberships" [value]="item.id">{{item.name}}</ion-select-option>
+          </ion-select>
+        </ion-item> <br />
+
+
+        <ion-item class="round" >
+          <ion-label>
+            {{"classes" | translate}}
+          </ion-label>
+          <ion-select id="my-select" [(ngModel)]="eleve"  [placeholder]='"choose_class" | translate'>
+            <ion-select-option *ngFor="let item of classes" [value]="item.id">{{item.name}}</ion-select-option>
+          </ion-select>
+        </ion-item> <br />
+
+        <div *ngIf="obj" style="color: white;background: #ac5ee6; border:1px solid #ac5ee6; padding:10px;padding-top:5px;">
+          <h4>{{"summary" | translate}}</h4>
+          <p >
+            <span> {{"price" | translate}} : {{formatPrice(obj.price)}} XAF</span><br>
+            <span> {{"validity" | translate}} : {{obj.periode}} days</span>
+      </p>
+
+        </div>
+
+
+        <ion-row style="padding-bottom: 10px;">
+          <ion-col class="edit-col">
+              <ion-button  (click)="pay()"  type="submit" class="button-primary">
+                {{"add_membership" | translate}}
+              </ion-button>
+          </ion-col>
+      </ion-row>
+
+
+      </ion-content>
+
+
+
+
+      <ion-content class="ion-padding" *ngIf="getUser()?.user?.roles[0].title=='Parent'">
+
+        <ion-item class="round" >
+          <ion-label>
+            {{"membership" | translate}}
+          </ion-label>
+          <ion-select id="my-select" [(ngModel)]="membershipp"  [placeholder]='"choose_membership" | translate' 
+          (ionChange)="handleChange($event)"
+          >
+            <ion-select-option *ngFor="let item of availableMemberships" [value]="item.id">{{item.name}}</ion-select-option>
+          </ion-select>
+        </ion-item> <br />
+
+
+        <ion-item class="round" >
+          <ion-label>
+            {{"classes" | translate}}
+          </ion-label>
+          <ion-select id="my-select" [(ngModel)]="eleve"  [placeholder]='"choose_class" | translate'>
+            <ion-select-option *ngFor="let item of studentParent" [value]="item.id">{{item.first_name}} {{item.last_name}}</ion-select-option>
+          </ion-select>
+        </ion-item> <br />
+
+        <div *ngIf="obj" style="color: white;background: #ac5ee6; border:1px solid #ac5ee6; padding:10px;padding-top:5px;">
+          <h4>{{"summary" | translate}}</h4>
+          <p >
+            <span> {{"price" | translate}} : {{formatPrice(obj.price)}} XAF</span><br>
+            <span> {{"validity" | translate}} : {{obj.periode}} days</span>
+      </p>
+
+        </div>
+
+
+        <ion-row style="padding-bottom: 10px;">
+          <ion-col class="edit-col">
+              <ion-button  (click)="payForParent()"  type="submit" class="button-primary">
+                {{"add_membership" | translate}}
+              </ion-button>
+          </ion-col>
+      </ion-row>
+
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+</ion-content>

@@ -1,0 +1,64 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+.padding-r-l{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.padding-no{
+    padding-left: 0px;
+}
+ion-card{
+    background-color: #004D3A;
+}
+
+.card-pay{
+    background-color: rgba(186,138,220,255);
+}
+
+
+.pink{
+    background-color: #004D3A!important;
+}
+
+.text_blank{
+    color: white;
+}
+
+.empty_account{
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.3);
+    background-color: rgb(98, 98, 98);
+    height: 200px;
+}
+
+
+.padding-top{
+    padding-top: 25px;
+}

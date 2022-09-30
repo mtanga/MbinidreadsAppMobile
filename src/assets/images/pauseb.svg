@@ -1,0 +1,5 @@
+<svg id="pause" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <path id="Tracé_1" data-name="Tracé 1" d="M30,0A30,30,0,1,0,60,30,30.034,30.034,0,0,0,30,0Zm0,58A28,28,0,1,1,58,30,28.032,28.032,0,0,1,30,58Z" fill="#fff"/>
+  <path id="Tracé_2" data-name="Tracé 2" d="M33,46h8V14H33Zm2-30h4V44H35Z" fill="#fff"/>
+  <path id="Tracé_3" data-name="Tracé 3" d="M19,46h8V14H19Zm2-30h4V44H21Z" fill="#fff"/>
+</svg>

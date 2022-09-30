@@ -1,0 +1,66 @@
+<ion-content >
+  <div class="padding-top padding-r-l" >
+    <div class="card">
+      <div class="header">
+        <div class="avatar">
+          <img src="../../../assets/images/gravatarr.png" alt="">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="user-meta ion-text-center">
+          <h3 class="playername"> {{getUser().user.fisrt_name}} {{getUser().user.last_name}}</h3>
+          <h6 class="ranking" *ngIf="classe">{{"classe" | translate}} <br>
+            <ion-chip>
+            <ion-label> </ion-label>
+            </ion-chip>
+          </h6>
+  
+        <ion-grid>
+          <ion-row>
+            <ion-col col="6">
+              <h6 class="ranking">{{"memberships" | translate}} <br>
+                <ion-chip>
+                <ion-label> {{infos.payements}}</ion-label>
+                </ion-chip>
+              </h6>
+            </ion-col>
+            <ion-col col="6">
+              <h6 class="ranking" *ngIf="getUser()?.user?.roles[0].title=='School'">{{"classes" | translate}} <br>
+                <ion-chip>
+                  <ion-label> {{infos.classe}}</ion-label>
+                  </ion-chip>
+              </h6>
+              <h6 class="ranking" *ngIf="getUser()?.user?.roles[0].title=='Parent'">{{"students" | translate}} <br>
+                <ion-chip>
+                  <ion-label> {{infos.student}}</ion-label>
+                  </ion-chip>
+              </h6>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  
+  
+
+        
+        </div>
+  
+        <ion-grid>
+          <ion-row>
+            <ion-col col="6" class="coli">
+              <ion-button (click)="editPassword()" expand="full" color="primary">{{"edit_password" | translate}}</ion-button>
+            </ion-col>
+            <ion-col col="6" class="coli">
+              <ion-button (click)="logout()"  expand="full" color="danger">{{"logout" | translate}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+
+     
+  
+      </div>
+    </div>
+  </div>
+
+</ion-content>

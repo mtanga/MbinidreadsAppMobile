@@ -1,0 +1,179 @@
+<ion-header no-border>
+  <ion-toolbar color="light">
+    <ion-buttons slot="start">
+      <ion-back-button color="primary" defaultHref="tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-icon id="open-modal" class="search" color="primary" slot="end"  name="create"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="card">
+    <div class="header">
+      <div class="avatar">
+        <img src="../../../assets/images/gravatarr.png" alt="">
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="user-meta ion-text-center">
+        <h3 class="playername">{{student.first_name}} {{student.last_name}}</h3>
+        <h6 class="ranking" >{{"score" | translate}} <br>
+          <ion-chip>
+          <ion-label>{{score.points}} points</ion-label>
+          </ion-chip>
+        </h6>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col="6" *ngIf="age">
+            <h6 class="ranking">{{"age" | translate}} <br>
+              <ion-chip>
+              <ion-label>{{age?.name}}</ion-label>
+              </ion-chip>
+            </h6>
+          </ion-col>
+          <ion-col col="6" *ngIf="langue">
+            <h6 class="ranking">{{"language" | translate}} <br>
+              <ion-chip>
+                <ion-label>{{langue?.title}}</ion-label>
+                </ion-chip>
+            </h6>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col="6">
+              <h6 class="ranking">{{"awards" | translate}} <br>
+                <ion-chip>
+                <ion-label>{{settings.awards}}</ion-label>
+                </ion-chip>
+              </h6>
+            </ion-col>
+            <ion-col col="6">
+              <h6 class="ranking">{{"reads" | translate}} <br>
+                <ion-chip>
+                <ion-label>{{settings.reads}}</ion-label>
+                </ion-chip>
+              </h6>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col="6">
+              <h6 class="ranking">{{"hear" | translate}}<br>
+                <ion-chip>
+                <ion-label>{{settings.hear}}</ion-label>
+                </ion-chip>
+              </h6>
+            </ion-col>
+            <ion-col col="6">
+              <h6 class="ranking">{{"quiz" | translate}}<br>
+                <ion-chip>
+                <ion-label>{{settings.quiz}}</ion-label>
+                </ion-chip>
+              </h6>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      
+      </div>
+
+      <ion-button (click)="switchUser()" expand="full" color="primary">{{"switch_to_this_profile" | translate}}</ion-button>
+
+    </div>
+  </div>
+
+
+
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">{{"cancel" | translate}}</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">{{"confirm" | translate}}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+
+
+
+
+
+
+
+  
+        <ion-grid>
+          <ion-row>
+              <ion-col class="edit-col">
+                  <ion-list class="background-secondary">
+
+                      <ion-item class="round">
+                          <ion-icon color="primary" name="person" class="icon-login"></ion-icon>
+                          <ion-input name="firstname"  [(ngModel)]="student.first_name" type="text" required [placeholder]='"first_name" | translate'></ion-input>
+                      </ion-item>
+                      <br />
+
+                      <ion-item class="round">
+                        <ion-icon color="primary" name="person" class="icon-login"></ion-icon>
+                        <ion-input name="lastname"  [(ngModel)]="student.last_name" type="text" required [placeholder]='"last_name" | translate'></ion-input>
+                    </ion-item>
+                    <br />
+
+
+                    <ion-item class="round">
+                      <ion-icon color="primary" name="person" class="icon-login"></ion-icon>
+                      <ion-input name="username"  [(ngModel)]="student.username" type="text" required [placeholder]='"username" | translate'></ion-input>
+                  </ion-item>
+                  <br />
+
+
+                  <ion-item class="round">
+                    <ion-label>
+                      {{"age" | translate}}
+                    </ion-label>
+                    <ion-select id="my-select" [(ngModel)]="sonAge"  [placeholder]='"choose_age" | translate'>
+                      <ion-select-option *ngFor="let item of setting.age" [value]="item.id">{{item.name}}</ion-select-option>
+                    </ion-select>
+                  </ion-item> <br />
+
+                  <ion-item class="round"> 
+                        <ion-icon color="primary" name="lock-closed-outline" class="icon-login"></ion-icon> 
+                        <ion-input [type]="passwordType"  name="password"  [(ngModel)]="student.password"  clearOnEdit="false"></ion-input>
+                        <ion-icon slot="end" [name]="passwordIcon" color="primary" class="passwordIcon" (click)="hideShowPassword()"></ion-icon>
+                  </ion-item>
+
+                  </ion-list>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col class="edit-col">
+                  <ion-button  (click)="edit()"  type="submit" class="button-primary">
+                    {{"edit_student" | translate}}
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+
+ 
+      </ion-grid>
+
+
+
+
+
+
+
+
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

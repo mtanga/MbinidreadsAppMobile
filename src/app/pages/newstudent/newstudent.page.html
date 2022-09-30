@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{"new_student" | translate}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  
+        <ion-grid>
+            <ion-row>
+                <ion-col >
+                    <ion-list class="background-secondary">
+
+                        <ion-item class="round">
+                            <ion-icon color="primary" name="person" class="icon-login"></ion-icon>
+                            <ion-input name="firstname"  [(ngModel)]="firstName" type="text" required [placeholder]='"first_name" | translate'></ion-input>
+                        </ion-item>
+                        <br />
+
+                        <ion-item class="round">
+                          <ion-icon color="primary" name="person" class="icon-login"></ion-icon>
+                          <ion-input name="lastname"  [(ngModel)]="lastName" type="text" required [placeholder]='"last_name" | translate'></ion-input>
+                      </ion-item>
+                      <br />
+
+
+                      <ion-item class="round">
+                        <ion-icon color="primary" name="person" class="icon-login"></ion-icon>
+                        <ion-input name="username"  [(ngModel)]="username" type="text" required [placeholder]='"username" | translate'></ion-input>
+                    </ion-item>
+                    <br />
+
+
+                    <ion-item class="round">
+                      <ion-label>
+                        {{"age" | translate}}
+                      </ion-label>
+                      <ion-select id="my-select" [(ngModel)]="age"  [placeholder]='"choose_age" | translate'>
+                        <ion-select-option *ngFor="let item of settings.age" [value]="item.id">{{item.name}}</ion-select-option>
+                      </ion-select>
+                    </ion-item> <br />
+
+
+
+                    <ion-item class="round">
+                      <ion-label>
+                        {{"language" | translate}}
+                      </ion-label>
+                      <ion-select id="my-select" [(ngModel)]="langue"  [placeholder]='"choose_language" | translate'>
+                        <ion-select-option *ngFor="let item of settings.langues" [value]="item.id">{{item.title}}</ion-select-option>
+                      </ion-select>
+                    </ion-item> <br />
+
+
+
+                    <ion-item class="round"> 
+                          <ion-icon color="primary" name="lock-closed-outline" class="icon-login"></ion-icon> 
+                          <ion-input [type]="passwordType"  name="password"  [(ngModel)]="password"  clearOnEdit="false"></ion-input>
+                          <ion-icon slot="end" [name]="passwordIcon" color="primary" class="passwordIcon" (click)="hideShowPassword()"></ion-icon>
+                    </ion-item>
+
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-button  *ngIf="getUser()?.user?.roles[0].title=='Parent'" (click)="addStudent()"  type="submit" class="button-primary">
+                      {{"add_student" | translate}}
+                    </ion-button>
+                    <ion-button  *ngIf="getUser()?.user?.roles[0].title=='School'" (click)="add()"  type="submit" class="button-primary">
+                      {{"add_student" | translate}}
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+   
+        </ion-grid>
+        
+
+</ion-content>

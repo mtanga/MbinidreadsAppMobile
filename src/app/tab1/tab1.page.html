@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{"hello" | translate}} {{getUser()?.user?.fisrt_name}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding="true">
+
+
+
+  <div class="padding-r-l" *ngIf="getUser()?.user?.roles[0].title=='School'">
+
+    <!-- fab placed to the bottom end -->
+    <ion-fab (click)="addClass()" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+
+    <h3>{{"classes" | translate}}</h3>
+    <ion-grid class="padding-no">
+        <ion-row>
+          <ion-col size="6" class="padding-no" *ngFor="let item of classes" (click)="classeItem(item)">
+              <ion-card>
+                <img src="../../../assets/images/class.png" />
+                <ion-card-header class="bg">
+                  <ion-card-subtitle class="text_blank">
+                    {{item.name}}
+                   
+                  </ion-card-subtitle>
+                    <span style="color: white;font-size:.6rem;float:right;padding-bottom: 5px;padding-top: 10px;">
+                      {{"show" | translate}} <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                    </span>
+                </ion-card-header>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+  </div>
+
+
+
+  <div class="padding-r-l" *ngIf="getUser()?.user?.roles[0].title=='Parent'">
+
+    <!-- fab placed to the bottom end -->
+    <ion-fab (click)="addStudent()" vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+
+    
+
+
+    <h3 style="padding-left:10px;">{{"test_acount" | translate}}</h3>
+    <ion-grid class="padding-no">
+        <ion-row>
+          <ion-col size="6" class="padding-no" *ngFor="let item of studenttestparent" (click)="studentItem(item)">
+              <ion-card>
+                <img src="../../../assets/images/gravatarr.png" />
+                <ion-card-header class="bg">
+                  <ion-card-subtitle class="text_blank">
+                    {{item.last_name}} {{item.first_name}}
+                   
+                  </ion-card-subtitle>
+                    <span style="color: white;font-size:.6rem;float:right;padding-bottom: 5px;padding-top: 10px;">
+                      {{"show_profile" | translate}} <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                    </span>
+                </ion-card-header>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+    <h3 style="padding-left:10px;">{{"students" | translate}} ({{studentparents.length}})</h3>
+    <ion-grid class="padding-no">
+        <ion-row>
+          <ion-col size="6" class="padding-no" *ngFor="let item of studentparents" (click)="studentItem(item)">
+              <ion-card>
+                <img src="../../../assets/images/gravatarr.png" />
+                <ion-card-header class="bg">
+                  <ion-card-subtitle class="text_blank">
+                    {{item.last_name}} {{item.first_name}}
+                   
+                  </ion-card-subtitle>
+                    <span style="color: white;font-size:.6rem;float:right;padding-bottom: 5px;padding-top: 10px;">
+                      {{"show_profile" | translate}} <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                    </span>
+                </ion-card-header>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+  
+
+
+  </div>
+
+
+
+
+</ion-content>
