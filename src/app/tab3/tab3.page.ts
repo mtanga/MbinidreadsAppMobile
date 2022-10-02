@@ -62,6 +62,8 @@ export class Tab3Page implements OnInit {
     
   }
 
+
+  
   getScore(user){
     console.log(user)
     let userr = {
@@ -196,7 +198,12 @@ export class Tab3Page implements OnInit {
 
   logout(){
     localStorage.removeItem('user_owner');
-    this.routes.urlSample("/signin")
+    this.routes.urlSample("/signin");
+  }
+
+  logoutStudent(){
+    localStorage.removeItem('user_owner');
+    this.routes.urlSample("/login");
   }
 
 }
