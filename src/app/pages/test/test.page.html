@@ -1,9 +1,124 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>test</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{"hello" | translate}} {{student?.user?.first_name}}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="lock-closed" color="light" (click)="logout()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
+  
 </ion-header>
 
+
+
+
 <ion-content>
+
+
+  <h3 style="padding-left: 10px;">
+    {{"new_books" | translate}}
+  </h3>
+  <ion-grid>
+    <ion-row>
+<!--       <ion-col size="1">
+        <span class="slider-nav arrow-prev" (click)="slidePrev(sliderTwo,slideWithNav2)">
+          <div class="prev-icon-custom custon-nav" [class.disabled]="sliderTwo.isBeginningSlide"></div>
+        </span>
+      </ion-col> -->
+      <ion-col size="12">
+
+        <ion-slides pager="true" slidesPerView="16" spaceBetween="20" class="ligne">
+          <ion-slide *ngFor="let item of newBook" class="cologne">
+            <ion-card>
+              <img [src]="'https://partners.mbindireads.com/'+item.image" />
+              <ion-card-header>
+                <ion-card-subtitle style="color:white;">{{item.name}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                
+                
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+
+      </ion-col>
+<!--       <ion-col size="1">
+        <span class="slider-nav arrow-next" (click)="slideNext(sliderTwo,slideWithNav2)">
+          <div class="next-icon-custom custon-nav" [class.disabled]="sliderTwo.isEndSlide"></div>
+        </span>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
+
+
+
+
+
+<!--   <ion-slides pager="false" [options]="slideOptsThree" #slideWithNav3
+    (ionSlideDidChange)="SlideDidChange(sliderThree,slideWithNav3)">
+    <ion-slide *ngFor="let s of sliderThree.slidesItems">
+      <img src="https://i.picsum.photos/id/{{s.id}}/300/200.jpg">
+    </ion-slide>
+  </ion-slides> -->
+
+<!--   <h3 style="padding-left: 10px;">
+    {{"new_books" | translate}}
+  </h3>
+  <p-carousel   class="itemi" [value]="newBook" styleClass="custom-carousel" [numVisible]="5" [numScroll]="1"
+  [circular]="true" [showIndicators]="false" [showNavigators]="false" [autoplayInterval]="3000"   [responsiveOptions]="responsiveOptions">
+      <ng-template  let-newBook pTemplate="item">
+        <div  class="zoom1 item card" style="margin:5px;">
+          <img [src]="'https://partners.mbindireads.com/'+newBook.image" class="imgtopi card-img-top" alt="...">
+          <div class="card-body ht">
+            <h5 class="white card-title">{{newBook.name}}</h5>
+            <span data-bs-toggle="modal" data-bs-target="#exampleModals" (click)="testread()" class="btpm btn btn-primary">Start</span>
+          </div>
+        </div>
+      </ng-template>
+  </p-carousel> -->
+
+
+  <h3 style="padding-left: 10px;">
+    {{"available_books" | translate}}
+  </h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of Booksreturned">
+        <ion-card class="back-card">
+          <img [src]="'https://partners.mbindireads.com/'+item.book.image" />
+          <ion-card-header>
+            <ion-card-subtitle style="color:#004D3A;">{{item.book.name}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="4" class="coll">
+                  <img  src="../../assets/images/hear.png" alt="Hear" width="40"/>
+                  <img *ngIf="item.reading.hear==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+
+                </ion-col>
+                <ion-col size="4" class="coll">
+                  <img src="../../assets/images/read.png" alt="Read" width="40"/>
+                  <img  *ngIf="item.reading.read==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+
+                </ion-col>
+                <ion-col size="4" class="coll">
+                  <img src="../../assets/images/quiz.png" alt="Quizz" width="40" />
+                  <img *ngIf="item.reading.quiz==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  
 
 </ion-content>

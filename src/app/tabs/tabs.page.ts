@@ -30,7 +30,7 @@ export class TabsPage {
 
 
   getUser(){
-    console.log(JSON.parse(localStorage.getItem('user_owner')));
+  //  console.log(JSON.parse(localStorage.getItem('user_owner')));
     return JSON.parse(localStorage.getItem('user_owner'));
   }
 

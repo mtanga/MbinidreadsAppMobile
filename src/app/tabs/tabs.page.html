@@ -1,6 +1,5 @@
-<ion-tabs>
-
-  <!-- For School -->
+<ion-tabs *ngIf="getUser()?.user?.roles!=undefined">
+<!-- For School -->
   <ion-tab-bar slot="bottom" *ngIf="getUser()?.user?.roles[0].title=='School'">
     <ion-tab-button tab="tab1">
       <ion-icon name="people-circle-outline"></ion-icon>
@@ -36,7 +35,27 @@
       <ion-label> {{"account" | translate}}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
-
-
 </ion-tabs>
+
+
+
+
+<ion-tabs *ngIf="getUser()?.user?.roles==undefined">
+    <!-- For children -->
+    <ion-tab-bar slot="bottom" >
+      <ion-tab-button tab="tab1">
+        <ion-icon name="logo-stackoverflow"></ion-icon>
+        <ion-label> {{"leveled_books" | translate}}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="tab2">
+        <ion-icon name="book-outline"></ion-icon>
+        <ion-label> {{"reading_room" | translate}}</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="tab3">
+        <ion-icon name="accessibility-outline"></ion-icon>
+        <ion-label> {{"my_stats" | translate}}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>

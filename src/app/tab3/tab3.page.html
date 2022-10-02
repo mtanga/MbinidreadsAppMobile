@@ -1,5 +1,5 @@
 <ion-content >
-  <div class="padding-top padding-r-l" >
+  <div class="padding-top padding-r-l" *ngIf="getUser()?.user?.roles!=undefined">
     <div class="card">
       <div class="header">
         <div class="avatar">
@@ -54,6 +54,111 @@
             </ion-col>
           </ion-row>
         </ion-grid>
+
+
+
+     
+  
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div class="padding-top padding-r-l" *ngIf="getUser()?.user?.roles==undefined">
+    <div class="card">
+      <div class="header">
+        <div class="avatar">
+          <img src="../../../assets/images/gravatarr.png" alt="">
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="user-meta ion-text-center">
+            <h3 class="playername"> {{getUser().user.fisrt_name}} {{getUser().user.last_name}}</h3>
+            <h6 class="ranking" >{{"score" | translate}} <br>
+              <ion-chip>
+              <ion-label> {{score}} points</ion-label>
+              </ion-chip>
+            </h6>
+    
+              <h3 >
+                {{"overall" | translate}}
+              </h3>
+              <ion-grid>
+                <ion-row>
+                  <ion-col col="6">
+                    <h6 class="ranking" >{{"total_awards" | translate}} <br>
+                      <ion-chip>
+                        <ion-label> {{my_award?.length || 0}}</ion-label>
+                        </ion-chip>
+                    </h6>
+                  </ion-col>
+                  <ion-col col="6">
+                    <h6 class="ranking" >{{"total_books" | translate}} <br>
+                      <ion-chip>
+                        <ion-label> {{read}}</ion-label>
+                        </ion-chip>
+                    </h6>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+
+              <h3 style="padding-top: 25px;">
+                {{"reading" | translate}}
+              </h3>
+              <ion-grid>
+                <ion-row>
+                  <ion-col col="4">
+                    <h6 class="ranking" >{{"reading" | translate}} <br>
+                      <ion-chip>
+                        <ion-label> {{read}}</ion-label>
+                        </ion-chip>
+                    </h6>
+                  </ion-col>
+                  <ion-col col="4">
+                    <h6 class="ranking" >{{"listen" | translate}} <br>
+                      <ion-chip>
+                        <ion-label> {{hear}}</ion-label>
+                        </ion-chip>
+                    </h6>
+                  </ion-col>
+                  <ion-col col="4">
+                    <h6 class="ranking" >{{"quiz" | translate}} <br>
+                      <ion-chip>
+                        <ion-label> {{quiz}}</ion-label>
+                        </ion-chip>
+                    </h6>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+
+              <h3 style="padding-top: 25px;">
+                {{"badges" | translate}}
+              </h3>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6" *ngFor="let itembadges of badges">
+                    <ion-card class="back-card">
+                      <img  [src]="'https://partners.mbindireads.com'+itembadges.file_path" >
+                      <ion-card-header>
+                        <ion-card-subtitle style="color:#004D3A;">
+                          {{itembadges.name}}
+                        </ion-card-subtitle>
+                      </ion-card-header>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+        </div>
+        
 
 
 

@@ -6,6 +6,7 @@ import { Subscription, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService } from '../shared/services/api.service';
 import { RoutesService } from '../shared/services/routes.service';
+import { SoundService } from '../shared/services/sound.service';
 
 @Component({
   selector: 'app-tab1',
@@ -19,11 +20,24 @@ export class Tab1Page implements OnInit{
   studentparents: any = [];
   studenttestparent: any;
 
+  userInfo: any | null;
+  user: any | null;
+  score: any;
+  countressources: any;
+  countR: any;
+  countReding: any;
+  levels : any = [];
+  countbooklevels: any;
+  books: any;
+  AllReadsBooks: any;
+  new_levels : any = [];
+
   constructor(
     private translateService: TranslateService,
     private api : ApiService,
     private routes : RoutesService,
     private alertController : AlertController,
+    private play: SoundService,
   ) {
         // timer(0, 10000) call the function immediately and every 10 seconds 
         this.timerSubscription = timer(0, 10000).pipe( 
@@ -39,13 +53,109 @@ export class Tab1Page implements OnInit{
 
   ngOnInit() {
     let user = JSON.parse(localStorage.getItem('user_owner'));
-    if(user.user?.roles[0].title=='School'){
-        this.getclasses(user.user.id);
+    this.getUser();
+    console.log("user student", user);
+    if(user?.user?.roles!=undefined){
+        if(user.user?.roles[0].title=='School'){
+          this.getclasses(user.user.id);
+        }
+        else if (user.user?.roles[0].title=='Parent'){
+          this.getstudents(user.user.id);
+        }
     }
-    else if (user.user?.roles[0].title=='Parent'){
-      this.getstudents(user.user.id);
+    else{
+      this.userInfo = JSON.parse(localStorage.getItem('user_owner'));
+      if(this.userInfo){
+        this.user = JSON.parse(localStorage.getItem('user_owner')).user;
+        this.getlevels(this.user);
+      }
     }
   }
+
+  getlevels(user) {
+    console.log(user)
+    let datas = {
+      langue : user.langue_id,
+      age : user.age.id,
+      student : user.id
+    }
+    this.api.getDatas("getlevelsWithReading", datas).subscribe( async (da:any)=>{
+      console.log("Mes livres", da);
+      this.newOrder(da.data);
+    })
+  }
+
+  newOrder(item){
+    this.books = item.sort((a, b) => parseInt(a.level.order) - parseInt(b.level.order));
+    console.log("ancien ordre", this.books)
+    //this.loading = false;
+
+  }
+
+  getLeveledBooks(user){
+    console.log(user)
+    let datas = {
+      langue : user.langue_id,
+      //level : id,
+      age : user.age.id,
+      student : user.id
+    }
+    this.api.getDatas("getlevelsWithReading", datas).subscribe( async (da:any)=>{
+      console.log("Mes livres", da);
+      this.books = da.data;
+      //this.getAllReadsBook();
+    })
+    return this.books;
+  }
+
+  opacityItem(books, index){
+    console.log(index)
+    console.log("books", books)
+      if(index == 0){
+        return true
+      }
+      else if(books[index-1].all_books > books[index-1].books_readed || books[index-1].all_books==0){
+        return false
+      }
+      else{
+        return true;
+      }
+      
+  }
+
+  filterLevels(levels){
+    return levels.sort((a, b) => parseInt(a.price) - parseInt(b.price));
+  }
+
+
+  goToBooks(books, index, id){
+    if(this.opacityItem(books, index)==true){
+      this.play.playOnClick();
+      let data =  {
+         item: id,
+         type : "level"
+        }
+      this.routes.urlWithParams("books", data)
+    }
+    
+  }
+
+
+
+  getAllReadsBook(){
+    let livre ={
+      student : this.user.id
+    }
+    this.api.getDatas("getreading", livre).subscribe( async (da:any)=>{
+      this.AllReadsBooks = da.data;
+      console.log("livre lu ?", da);
+     // this.getReadsBook();
+    })
+    return this.AllReadsBooks;
+}
+
+
+
 
   getstudents(id){
     let data ={

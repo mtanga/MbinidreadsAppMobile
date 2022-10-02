@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core'; // 1
 import { NetworkService } from 'src/app/shared/services/network.service';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { SoundService } from 'src/app/shared/services/sound.service';
 
 
 @Component({
@@ -40,15 +41,19 @@ export class LoginPage implements OnInit {
     private network : NetworkService,
     private api : ApiService,
     private toast : ToastService,
+    private play : SoundService
   ) { }
 
   ngOnInit() {
     //this.studentStorage = JSON.parse(localStorage.getItem('studentStored'));
-    this.student = {
-      password : JSON.parse(localStorage.getItem('studentStored')).password,
-      username : JSON.parse(localStorage.getItem('studentStored')).username
+    if(JSON.parse(localStorage.getItem('studentStored'))){
+      this.student = {
+        password : JSON.parse(localStorage.getItem('studentStored')).password,
+        username : JSON.parse(localStorage.getItem('studentStored')).username
+      }
     }
-    console.log(JSON.parse(localStorage.getItem('studentStored')));
+
+    //console.log(JSON.parse(localStorage.getItem('studentStored')));
     this.get_readingBooks();
 
   }
@@ -98,10 +103,10 @@ reset(){
 
     else{
       let data = {
-        email : this.student.username,
+        username : this.student.username,
         password : this.student.password
       }
-      this.api.loginOwner(data).subscribe((data:any)=>{
+      this.api.login(data).subscribe((data:any)=>{
         //console.log("message", data)
         if(data.message == "Success"){
             //console.log(data.data);
@@ -158,19 +163,25 @@ reset(){
                   this.testMessage(this.user.first_name); 
                   //this.showSuccess("Welcomme back "+user.first_name, "Success login");
                   //this.router.navigate(['/test']);
+                  console.log("Test user")
+                  this.play.playOnSuccess();
+                  this.routes.urlSample("test");
                 }
                 else if(this.user.age.years_start == 3){
-                    this.mbindiMessage(this.user.first_name);
+                    this.mbindiMessage(this.user);
 
                 }
                 else if(this.user.age.years_start > 3){
                   this.seniorMessage(this.user.first_name)
                     //this.showSuccess("Welcomme back "+user.first_name, "Success login");
                     //this.router.navigate(['/home']);
+
                   
                 }
                 else{
-                  this.routes.urlSample("test");
+                  console.log("Test user 2")
+                  this.play.playOnSuccess();
+                    this.routes.urlSample("test");
 
                 }
             }
@@ -189,16 +200,18 @@ reset(){
 
   async seniorMessage(user){
     this.toast.presentToast(await this.translateService.get('welcome_user'+user).toPromise());
+    this.play.playOnSuccess();
     this.routes.urlSample("/tabs/tab1");
   }
 
 
   async mbindiMessage(user){
-    this.toast.presentToast(await this.translateService.get('welcome_user'+user).toPromise());
+    this.toast.presentToast(await this.translateService.get('welcome_user'+user.first_name).toPromise());
     let data = {
       item: user.age.id,
       type : "age"
       }
+    this.play.playOnSuccess();
     this.routes.urlWithParams("/books", data)
   }
 

@@ -1,9 +1,102 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>books</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="user.age.years_start == 3">
+      {{"hello" | translate}} {{student?.first_name}}
+    </ion-title>
+    <ion-title *ngIf="user.age.years_start > 3">
+      {{"reading_room" | translate}}
+    </ion-title>
+    <ion-buttons slot="start" color="secondary" *ngIf="user.age.years_start > 3">
+      <ion-back-button class="white" defaultHref="/tabs/tab1"> </ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="user.age.years_start == 3">
+      <ion-icon name="lock-closed" color="light" (click)="logout()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
+  
 </ion-header>
 
+
+
+
 <ion-content>
+
+      <div *ngIf="user.age.years_start == 3">
+        <h3 style="padding-left: 10px;">
+          {{"new_books" | translate}}
+        </h3>
+     <ion-grid>
+        <ion-row>
+      <!--       <ion-col size="1">
+              <span class="slider-nav arrow-prev" (click)="slidePrev(sliderTwo,slideWithNav2)">
+                <div class="prev-icon-custom custon-nav" [class.disabled]="sliderTwo.isBeginningSlide"></div>
+              </span>
+            </ion-col> -->
+            <ion-col size="12">
+      
+              <ion-slides pager="true" slidesPerView="16" spaceBetween="20" class="ligne">
+                <ion-slide *ngFor="let item of newBook" class="cologne">
+                  <ion-card>
+                    <img [src]="'https://partners.mbindireads.com/'+item.image" />
+                    <ion-card-header>
+                      <ion-card-subtitle style="color:white;">{{item.name}}</ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                      
+                      
+                    </ion-card-content>
+                  </ion-card>
+                </ion-slide>
+              </ion-slides>
+      
+            </ion-col>
+      <!--       <ion-col size="1">
+              <span class="slider-nav arrow-next" (click)="slideNext(sliderTwo,slideWithNav2)">
+                <div class="next-icon-custom custon-nav" [class.disabled]="sliderTwo.isEndSlide"></div>
+              </span>
+            </ion-col> -->
+          </ion-row>
+        </ion-grid>
+  </div>
+
+
+  <h3 style="padding-left: 10px;">
+    {{"available_books" | translate}}
+  </h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of Booksreturned">
+        <ion-card class="back-card">
+          <img [src]="'https://partners.mbindireads.com/'+item.book.image" />
+          <ion-card-header>
+            <ion-card-subtitle style="color:#004D3A;">{{item.book.name}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="4" class="coll">
+                  <img  src="../../assets/images/hear.png" alt="Hear" width="40"/>
+                  <img *ngIf="item.reading.hear==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+
+                </ion-col>
+                <ion-col size="4" class="coll">
+                  <img src="../../assets/images/read.png" alt="Read" width="40"/>
+                  <img  *ngIf="item.reading.read==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+
+                </ion-col>
+                <ion-col size="4" class="coll">
+                  <img src="../../assets/images/quiz.png" alt="Quizz" width="40" />
+                  <img *ngIf="item.reading.quiz==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>

@@ -8,6 +8,73 @@
 
 <ion-content >
 
+
+  <div *ngIf="getUser()?.user?.roles==undefined">
+    <h3 style="padding-left: 10px;">
+      {{"themes" | translate}}
+    </h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="col-student" size="6" *ngFor="let itemthemes of themes"(click)="goToBooks(itemthemes.id, 'theme')">
+          <ion-card class="back-card">
+            <img *ngIf="itemthemes.image" [src]="'https://partners.mbindireads.com/'+itemthemes.image" alt="Avatar" >
+            <img *ngIf="!itemthemes.image" src="assets/images/no-image.svg" alt="Avatar" >
+            <ion-card-header>
+              <ion-card-subtitle style="color:#004D3A;">
+                {{itemthemes.name}} 
+              </ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <h3 style="padding-left: 10px;padding-yop: 25px;">
+      {{"genre" | translate}}
+    </h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="col-student" size="6" *ngFor="let itemgenre of genres"(click)="goToBooks(itemgenre.id, 'theme')">
+          <ion-card class="back-card">
+            <img *ngIf="itemgenre.image" [src]="'https://partners.mbindireads.com/'+itemgenre.image" alt="Avatar" >
+            <img *ngIf="!itemgenre.image" src="assets/images/no-image.svg" alt="Avatar" >
+            <ion-card-header>
+              <ion-card-subtitle style="color:#004D3A;">
+                {{itemgenre.name}} 
+              </ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <h3 style="padding-left: 10px;padding-yop: 25px;">
+      {{"subject" | translate}}
+    </h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col class="col-student" size="6" *ngFor="let itemsubject of subjects" (click)="goToBooks(itemsubject.id, 'theme')">
+          <ion-card class="back-card">
+            <img *ngIf="itemsubject.image" [src]="'https://partners.mbindireads.com/'+itemsubject.image" alt="Avatar" >
+            <img *ngIf="!itemsubject.image" src="assets/images/no-image.svg" alt="Avatar" >
+            <ion-card-header>
+              <ion-card-subtitle style="color:#004D3A;">
+                {{itemsubject.name}} 
+              </ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+
+
+
+<div *ngIf="getUser()?.user?.roles!=undefined">
   <div class="padding-r-l-l" *ngIf="getUser()?.user?.roles[0].title=='School'">
 
     <!-- fab placed to the bottom end -->
@@ -242,5 +309,5 @@
     </ng-template>
   </ion-modal>
 
-
+</div>
 </ion-content>

@@ -37,10 +37,38 @@
 ion-card{
     background-color: #004D3A;
 }
+.coll{
+    border: 1px solid #004D3A;
+    display: flex;
+}
+.checkeds{
+    float: right;
+    width: 6px;
+    height: 10px;
+}
+
+.back-card{
+    background: white!important;
+}
 
 .card-pay{
     background-color: rgba(186,138,220,255);
 }
+
+.ligne{
+    width: 100%;
+    display: grid;
+}
+
+.colonne{
+    width: 50%;
+}
+
+.colonne:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 
 
 .pink{

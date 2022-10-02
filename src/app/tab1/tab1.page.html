@@ -1,15 +1,44 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      {{"hello" | translate}} {{getUser()?.user?.fisrt_name}}
+      {{"hello" | translate}} {{getUser()?.user?.fisrt_name || getUser()?.user?.first_name}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding="true">
 
+  <div *ngIf="getUser()?.user?.roles==undefined">
+    <h3 style="padding-left: 10px;">
+      {{"leveled_books" | translate}}
+    </h3>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let item of books; let i = index" (click)="goToBooks(books, i, item.level.id)"
+        [ngClass]="{
+         'counterb': opacityItem(books, i)==false }">
+          <ion-card class="back-card">
+            <img *ngIf="item.level.image" [src]="'https://partners.mbindireads.com/'+item.level.image" alt="Avatar" >
+            <img *ngIf="!item.level.image" src="../../assets/images/no-image.svg" alt="Avatar" >
+            <ion-card-header>
+              <ion-card-subtitle style="color:#004D3A;">
+                <h3 style="font-size:1rem;">{{item.level.name}}</h3>
+                <h3 *ngIf="opacityItem(books, i)==false"  class="timer count-title" style="float: right;">
+                  <img src="../../assets/images/lock.png" alt="Resume" width="10" />
+                </h3> 
+              </ion-card-subtitle>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
 
 
+
+
+<div *ngIf="getUser()?.user?.roles!=undefined">
   <div class="padding-r-l" *ngIf="getUser()?.user?.roles[0].title=='School'">
 
     <!-- fab placed to the bottom end -->
@@ -102,6 +131,7 @@
 
 
   </div>
+</div>
 
 
 

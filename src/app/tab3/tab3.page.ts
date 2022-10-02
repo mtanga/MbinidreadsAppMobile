@@ -16,6 +16,20 @@ export class Tab3Page implements OnInit {
   language: string = this.translateService.currentLang; // 2
   classes: any;
   infos: any = {};
+  student: any;
+  user: any;
+
+  userInfo: any | null;
+  score: any;
+  countressources: any;
+  countR: any;
+  countReding: any;
+  valeur : any = "Overall";
+  badges : any = [];
+  read: any;
+  quiz: any;
+  hear: any;
+  my_award: any;
 
   
   constructor(
@@ -37,10 +51,82 @@ export class Tab3Page implements OnInit {
 
 
   ngOnInit() {
- 
+    let user = JSON.parse(localStorage.getItem('user_owner'));
+    if(user?.user?.roles!=undefined){
         this.getInfosUser(JSON.parse(localStorage.getItem('user_owner')).user.id);
+    }
+    else{
+      this.user = JSON.parse(localStorage.getItem('user_owner')).user;
+      this.getScore(this.user);
+    }
     
   }
+
+  getScore(user){
+    console.log(user)
+    let userr = {
+      id : user.id
+    }
+    this.api.getDatas("getscore", userr).subscribe( async (da:any)=>{
+      console.log(da);
+      this.score = da.data[0].points;
+      this.getbadges();
+    })
+  }
+
+
+  getbadges() {
+    this.api.getData("getallawards").subscribe( async (da:any)=>{
+      console.log("Mes badges", da);
+      this.badges = da.data;
+      this.countReads();
+    })
+  }
+
+
+  countReads(){
+    let user = {
+      student : this.user.id
+    }
+    this.api.getDatas("countreads", user).subscribe( async (da:any)=>{
+      console.log(da);
+      this.read = da.data;
+    })
+    this.countquiz();
+  }
+
+  countquiz() {
+        let user = {
+          student : this.user.id
+        }
+    this.api.getDatas("countquiz", user).subscribe( async (da:any)=>{
+      console.log(da);
+      this.quiz = da.data;
+    })
+    this.counthear();
+  }
+
+  counthear() {
+        let user = {
+          student : this.user.id
+        }
+    this.api.getDatas("counthear", user).subscribe( async (da:any)=>{
+      console.log(da);
+      this.hear = da.data;
+      this.getawards()
+    })
+  }
+
+  getawards(){
+    let user = {
+      id : this.user.id
+    }
+    this.api.getDatas("getawards", user).subscribe( async (da:any)=>{
+      console.log(da);
+      this.my_award = da.data;
+    })
+  }
+
 
   getInfosUser(id){
     let data ={
@@ -53,8 +139,8 @@ export class Tab3Page implements OnInit {
   }
 
   getUser(){
-    console.log(JSON.parse(localStorage.getItem('user_owner')));
-    console.log("role", JSON.parse(localStorage.getItem('user_owner'))?.user?.roles[0].title);
+  //  console.log(JSON.parse(localStorage.getItem('user_owner')));
+   // console.log("role", JSON.parse(localStorage.getItem('user_owner'))?.user?.roles[0].title);
     return JSON.parse(localStorage.getItem('user_owner'));
   }
 

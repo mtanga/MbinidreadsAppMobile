@@ -17,7 +17,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="FadeSplashScreen" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
-    <preference name="SplashScreen" value="resources/thesplash.png" />
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/thesplash.png" />
     <preference name="SplashScreenBackgroundColor" value="#B98CDA" />
     <preference name="loadUrlTimeoutValue" value="60000" />
     <preference name="SplashScreenDelay" value="20000" />
@@ -39,7 +39,7 @@
     <preference name="AndroidXEnabled" value="true" />
     <preference name="InAppBrowserStatusBarStyle" value="lightcontent" />
     <platform name="android">
-        <preference name="SplashScreen" value="resources/thesplash.png" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/thesplash.png" />
         <preference name="ShowSplashScreenSpinner" value="true" />
         <preference name="Scheme" value="http" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">

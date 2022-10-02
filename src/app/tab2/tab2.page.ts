@@ -6,6 +6,7 @@ import { RoutesService } from '../shared/services/routes.service';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { ToastService } from '../shared/services/toast.service';
+import { SoundService } from '../shared/services/sound.service';
 
 
 
@@ -28,22 +29,76 @@ export class Tab2Page implements OnInit {
   eleve: string;
   studentParent: any;
 
+  userInfo: any | null;
+  user: any | null;
+  score: any;
+  countressources: any;
+  countR: any;
+  countReding: any;
+  themes : any = [];
+  subjects : any = [];
+  genres : any = [];
+  countbooklevels: any;
+
   constructor(
     private translateService: TranslateService,
     private api : ApiService,
     private routes : RoutesService,
     private alertController : AlertController,
     private toast : ToastService,
+    private play: SoundService,
   ) {}
 
 
   ngOnInit(): void {
-    if(JSON.parse(localStorage.getItem('user_owner')).user.roles[0].title == "School"){
-      this.getMembershipsSchool(JSON.parse(localStorage.getItem('user_owner')).user.id);
+    let user = JSON.parse(localStorage.getItem('user_owner'));
+    if(user?.user?.roles!=undefined){
+      if(JSON.parse(localStorage.getItem('user_owner')).user.roles[0].title == "School"){
+        this.getMembershipsSchool(JSON.parse(localStorage.getItem('user_owner')).user.id);
+      }
+      else if(JSON.parse(localStorage.getItem('user_owner')).user.roles[0].title == "Parent"){
+        this.getMembershipsParent(JSON.parse(localStorage.getItem('user_owner')).user.id);
+      }
     }
-    else if(JSON.parse(localStorage.getItem('user_owner')).user.roles[0].title == "Parent"){
-      this.getMembershipsParent(JSON.parse(localStorage.getItem('user_owner')).user.id);
+    else{
+      this.user = JSON.parse(localStorage.getItem('user_owner')).user;
+      this.getthemes();
     }
+  }
+
+  getthemes(){
+    this.api.getData("themes").subscribe( async (da:any)=>{
+      console.log(da);
+      this.themes = da.data;
+    })
+    this.getgenres();
+  }
+
+
+  getgenres() {
+    this.api.getData("genres").subscribe( async (da:any)=>{
+      console.log(da);
+      this.genres = da.data;
+    })
+    this.getsubjects();
+  }
+
+
+  getsubjects() {
+    this.api.getData("subjects").subscribe( async (da:any)=>{
+      console.log(da);
+      this.subjects = da.data;
+     // this.loading = false;
+    })
+  }
+
+  goToBooks(id, type){
+    this.play.playOnClick();
+    let data = {
+       item: id,
+       type : type
+      }
+    this.routes.urlWithParams("books", data);
   }
 
   getUser(){

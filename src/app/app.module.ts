@@ -20,6 +20,10 @@ export function createTranslateLoader(http: HttpClient) {
 
 import { IonIntlTelInputModule } from 'ion-intl-tel-input';
 
+import {CarouselModule} from 'primeng/carousel';
+import {ButtonModule} from 'primeng/button';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -27,6 +31,9 @@ import { IonIntlTelInputModule } from 'ion-intl-tel-input';
     IonicModule.forRoot(), 
     AppRoutingModule,
     IonIntlTelInputModule,
+    CarouselModule,
+    NgbModule,
+    ButtonModule,
     HttpClientModule, // <--- add this
     TranslateModule.forRoot({ // <--- add this
       loader: { // <--- add this
