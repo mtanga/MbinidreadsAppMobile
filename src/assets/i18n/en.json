@@ -116,6 +116,7 @@
     "next" : "Next",
     "start" : "Start",
     "end" : "End",
+    "continue" : "Continue",
     "ypu_mus_choose_question_to_continue" : "You must choose answer to continue",
     "exit" : "Exit",
     "reset-password" : "Reset password",

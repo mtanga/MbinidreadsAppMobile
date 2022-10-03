@@ -397,6 +397,7 @@ checkIfCHoose(quiz){
 
 
 choose(item, quiz){
+  this.itemActu = item 
   console.log("quiz", quiz);
   let data = {
     id : item.id,

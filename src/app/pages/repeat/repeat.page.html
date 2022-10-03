@@ -1,9 +1,149 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>repeat</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title >
+      {{"quiz" | translate}}
+    </ion-title>
+    <ion-buttons slot="start" color="secondary" >
+      <ion-back-button class="white" defaultHref="/tabs/tab1"> </ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+<div>
+  <!-- Text questions -->
+<!--   <div *ngIf="normalResponse==true" class="cards p-4">
+    <div class="cardi_level">
+      <img src="../../assets/images/home.png" alt="Resume" width="125" />
+      <span (click)="backClicked()" class="nexts" style="color:white;font-size: 2rem;
+      text-align: center;">
+      </span>
 
+
+    </div>
+    
+  </div> -->
+
+  <div *ngIf="lost==true" class="cards p-4">
+    <div class="cardi" style="text-align: center;color: white">
+   <img src="assets/images/lowscore.gif" alt="Resume" width="450" style="margin-right: auto;
+      margin-left: auto;display: block; margin-top : -10px;"/> 
+
+      <p class="return pbi">{{this.score}} / {{quiz.length}} </p>
+      <span class="return">
+        <ion-button (click)="lostRedirect()" color="secondary">
+          {{"try_again" | translate}}
+        </ion-button>
+      </span>
+    </div>
+  </div>
+
+
+  <div *ngIf="nextlevelOptions==true" class="cards p-4">
+    <div class="cardi" style="text-align: center;color: white">
+   <img src="assets/images/goodscore.gif" alt="Resume" width="450" style="margin-right: auto;
+      margin-left: auto;display: block; margin-top : -10px;"/> 
+
+      <p class="return pbi">{{this.score}} / {{quiz.length}} </p>
+      <span class="return">
+
+        <ion-button (click)="lostRedirect()" color="secondary">
+          {{"try_again" | translate}}
+        </ion-button>
+
+        <ion-button (click)="validateOnly(plus, item, quiz[plus])" color="secondary">
+          {{"continue" | translate}}
+        </ion-button>
+      </span>
+    </div>
+  </div>
+
+
+  <div *ngIf="nextlevel==true" class="cards p-4">
+    <div class="cardi" style="text-align: center;color: white">
+   <img src="assets/images/excellentscore.gif" alt="Resume" width="450" style="margin-right: auto;
+      margin-left: auto;display: block; margin-top : -10px;"/> 
+
+      <p class="return pbi">{{this.score}} / {{quiz.length}} </p>
+      <span class="return">
+        <ion-button (click)="backClicked()" color="secondary">
+          {{"continue" | translate}}
+        </ion-button>
+      </span>
+    </div>
+  </div>
+  
+
+
+
+  
+  <div *ngIf="normalResponse==true">
+    <ion-grid>
+      <ion-row class="question-title">
+        <ion-col col="12">
+          <h3 style="display: flex;">
+            <img class="mr-3 hand" (click)="listen(reste[plus]?.audio)" src="../../assets/images/speakersw.svg" alt="Play" width="48"/>
+            {{reste[plus]?.title}}
+          </h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid>
+      <ion-row class="question" *ngFor="let item of reste[plus]?.anwsers; let i = index">
+        <ion-col col="12" (click)="choose(item, reste[plus])">
+          <img class="mr-3 hand imgt" (click)="listen(item.audio)" src="../../assets/images/speakersw.svg" alt="Play" width="48"/>
+          <h3 style="display: flex;">
+            <span class="lettre">
+              {{lettre[i]?.item}}
+            </span>
+            
+            {{item.title}}
+            
+          </h3>
+          <img *ngIf="itemActu?.id == item.id" class="checked" src="../../assets/images/checked.png" alt="Resume" width="25" />
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-grid>
+      <ion-row class="questions" >
+        <ion-col col="3">
+          <div *ngIf="plus>0">
+            <span *ngIf="plus-1<reste?.length" (click)="previousstep(plus, item, quiz[plus])" class="nexts" style="color:white;font-size: 2rem;
+            text-align: left;">
+              <img src="../../assets/images/arrow_left.png" alt="Resume" width="50" /><br><small style="display: flex;font-size:.7rem;"> {{"previous" | translate}}</small>
+            </span>
+          </div>
+<!--           <div *ngIf="plus==0" style="text-align: left;">
+            <span *ngIf="plus-1<quiz?.length" (click)="backClicked()" class="nexts" style="color:white;font-size: 2rem;
+            text-align: left;">
+              <img src="../../assets/images/home.png" alt="Resume" width="25" /><br><small style="display: flex;font-size:.7rem;">Home</small>
+            </span>
+          </div> -->
+        </ion-col>
+        <ion-col col="6"> </ion-col>
+
+
+        <ion-col col="3">
+          <span *ngIf="plus+1<reste.length" (click)="nextstep(plus, item, quiz[plus])" class="nexts" style="float: inline-end;color:white;font-size: 2rem;
+          text-align: right;">
+            <img src="../../assets/images/arrow_right.png" alt="Resume" width="50" /><br><small style="display: flex;font-size:.7rem;"> {{"next" | translate}}</small>
+          </span>
+
+
+          <span *ngIf="deja==false" style="text-align: right;">
+            <span *ngIf="plus==reste.length-1" (click)="validate(plus, item, quiz[plus])" class="nexts" style="color:white;font-size: 2rem;
+            text-align: right;">
+              <img src="../../assets/images/done.png" alt="Resume" width="50" /><br><small style="display: flex;font-size:.7rem;">  {{"finished" | translate}}</small>
+            </span>
+  </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>
 </ion-content>
+
