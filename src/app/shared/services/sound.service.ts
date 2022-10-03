@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
-
+import {
+  DomSanitizer,
+  SafeHtml,
+  SafeStyle,
+  SafeScript,
+  SafeUrl,
+  SafeResourceUrl,
+} from "@angular/platform-browser";
 @Injectable({
   providedIn: 'root'
 })
 export class SoundService {
 
-  constructor() { }
+  urlSafe: SafeResourceUrl;
+
+  constructor(
+    protected sanitizer: DomSanitizer,
+  ) { }
 
 
   playOnClick() {
@@ -31,6 +42,12 @@ export class SoundService {
 
   playOnLowScore() {
     var audio = new Audio('../../../../assets/sounds/lowscore.mp3');
+    audio.play();
+  }
+
+  listen(song:any) {
+    let urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(song.replace(/\s/g, ''));
+    var audio = new Audio(song);
     audio.play();
   }
 

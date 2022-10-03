@@ -65,7 +65,7 @@
   </h3>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let item of Booksreturned">
+      <ion-col size="6" *ngFor="let item of Booksreturned" (click)="openBook(item)">
         <ion-card class="back-card">
           <img [src]="'https://partners.mbindireads.com/'+item.book.image" />
           <ion-card-header>
@@ -79,7 +79,7 @@
                   <img *ngIf="item.reading.hear==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
 
                 </ion-col>
-                <ion-col size="4" class="coll">
+                <ion-col size="4" class="coll" *ngIf="mbindi==false">
                   <img src="../../assets/images/read.png" alt="Read" width="40"/>
                   <img  *ngIf="item.reading.read==1" src="../../assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
 
@@ -97,6 +97,104 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+
+
+
+<!-- For all steps -->
+  <ion-modal class="bg-pink" trigger="open-modal" (willDismiss)="onWillDismiss($event)" [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">{{"cancel" | translate}}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding bg-pink" >
+        <ion-card>
+          <img class="img-top card-img-top" [src]="'https://partners.mbindireads.com/'+infos.book.image" alt="Card image cap" >
+          <ion-card-header>
+            <ion-card-title style="color:white;">{{infos.book.name}}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            <ion-grid>
+              <ion-row style="border-top:2px solid white;" (click)="hear(infos)" >
+                <img src="assets/images/hear.png" alt="Hear" width="40"/>
+                <img *ngIf="infos.reading?.hear==1" src="assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+                <h3 style="color:white;padding-top: 6px; padding-left: 10px;">
+                  {{"listen" | translate}}
+                </h3>
+              </ion-row>
+              <ion-row style="border-top:2px solid white;" (click)="read(infos)" *ngIf="mbindi==false">
+                <img src="assets/images/read.png" alt="Read" width="40"/>
+                <img  *ngIf="item.reading?.read==1" src="assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+                <h3 style="color:white;padding-top: 6px; padding-left: 10px;">
+                  {{"read" | translate}}
+                </h3>
+              </ion-row>
+              <ion-row style="border-top:2px solid white;" (click)="quiz(infos)">
+                <img src="assets/images/quiz.png" alt="Quizz" width="40" />
+                <img *ngIf="item.reading?.quiz==1" src="assets/images/checked.png" class="checkeds" alt="Checked" width="10"/>
+                <h3 style="color:white;padding-top: 6px; padding-left: 10px;">
+                  {{"quiz" | translate}}
+                </h3>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+
+
+
+
+<!-- For hear -->
+<ion-modal class="bg-pink" trigger="open-modal" (willDismiss)="onWillDismiss($event)" [isOpen]="hearing==true">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-button (click)="exitt()">{{"exit" | translate}}</ion-button>
+        </ion-buttons>
+<!--         <ion-buttons slot="end">
+          <ion-button (click)="goQuiz(infosHearing.book.id)">{{"go_to_quiz" | translate}}</ion-button>
+        </ion-buttons> -->
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding bg-pink" >
+      <iframe [src]="urlSafe" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+        Your browser doesn't support iframes
+    </iframe> 
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
+<!-- For read -->
+<ion-modal class="bg-pink" trigger="open-modal" (willDismiss)="onWillDismiss($event)" [isOpen]="readingOnly">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-button (click)="exitt()">{{"exit" | translate}}</ion-button>
+        </ion-buttons>
+<!--         <ion-buttons slot="end">
+          <ion-button (click)="goQuiz(infosreading.book.id)">{{"go_to_quiz" | translate}}</ion-button>
+        </ion-buttons> -->
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding bg-pink" >
+      <iframe [src]="urlSafe" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+        Your browser doesn't support iframes
+    </iframe> 
+    </ion-content>
+  </ng-template>
+</ion-modal>
 
 
 </ion-content>

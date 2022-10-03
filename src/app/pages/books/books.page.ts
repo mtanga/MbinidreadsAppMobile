@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, Pipe, PipeTransform } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {NgbPopoverConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -10,6 +10,16 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RoutesService } from 'src/app/shared/services/routes.service';
 
+import { IonModal } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
+import {
+  DomSanitizer,
+  SafeHtml,
+  SafeStyle,
+  SafeScript,
+  SafeUrl,
+  SafeResourceUrl,
+} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-books',
@@ -18,9 +28,10 @@ import { RoutesService } from 'src/app/shared/services/routes.service';
 })
 export class BooksPage implements OnInit {
 
-
+  @ViewChild(IonModal) modal: IonModal;
   public loading = false;
   sub: any;
+  urlSafe: SafeResourceUrl;
   item: any = [];
   type: number;
   books : any = [];
@@ -28,7 +39,8 @@ export class BooksPage implements OnInit {
   reading : any = [];
   mbindi : boolean = false;
   //private _subscription:Subscription;
-
+  isModalOpen : boolean = false;
+  hearing : boolean = false;
 
   //images; 
   responsiveOptions;
@@ -56,6 +68,10 @@ export class BooksPage implements OnInit {
   intervalS: number = 15000;
   student: any;
   language: string = this.translateService.currentLang; // 2
+  infos: any;
+  infosHearing: any;
+  readingOnly: boolean = false;
+  infosreading: any;
 
 
 
@@ -65,6 +81,7 @@ export class BooksPage implements OnInit {
     private router:Router,
     private con: ApiService,
     private play: SoundService,
+    protected sanitizer: DomSanitizer,
     private _location: Location,
     private toast : ToastService,
     private routes : RoutesService,
@@ -109,6 +126,30 @@ export class BooksPage implements OnInit {
     }
     else{
       this.router.navigate(['/login']);
+    }
+  }
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+    this.isModalOpen = false;
+  }
+
+  confirm() {
+    this.isModalOpen
+    this.modal.dismiss('confirm');
+  }
+
+  openBook(item){
+    this.isModalOpen = !this.isModalOpen
+    this.play.playOnClick();
+    this.infos = item;
+    console.log("items", this.infos);
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      //this.message = `Hello, ${ev.detail.data}!`;
     }
   }
 
@@ -261,33 +302,56 @@ export class BooksPage implements OnInit {
 
   read(item){
     this.play.playOnHover();
-    this.clicked = false;
-    this.router.navigate(['/item'], { queryParams: {
-      item: item,
-      type : "read",
-      typo : this.type
-       }
-     });
+    //console.log("A ecouter", item);
+    this.infosreading = item;
+    this.isModalOpen = false;
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.infosreading.book.reading.replace(/\s/g, ''));
+    this.readingOnly = true;
   }
 
 
   hear(item){
     this.play.playOnHover();
-    this.clicked = false;
-    this.router.navigate(['/read'], { queryParams: {
-      item: item,
-      type : "hear",
-      typo : this.type
-       }
-     });
+    //console.log("A ecouter", item);
+    this.infosHearing = item;
+    this.isModalOpen = false;
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.infosHearing.book.spoken.replace(/\s/g, ''));
+    this.hearing = true;
+
+  }
+
+  goQuiz(id){
+    console.log("jjj")
+    this.modal.dismiss(null, 'cancel');
+    this.hearing = false;
+    this.readingOnly = false;
+    this.play.playOnHover();
+    
+      this.router.navigate(['/quiz'], { queryParams: {
+        item: id,
+        book : this.item,
+        type : this.type,
+         }
+       });
+  }
+
+
+
+  exitt(){
+    this.hearing = false;
+    this.readingOnly = false;
   }
 
   async quiz(item){
-    if(item.reading.quiz==1){
+    this.modal.dismiss(null, 'cancel');
+    this.hearing = false;
+    this.readingOnly = false;
+    if(item.reading?.quiz==1){
       //this.toastr.warning("You have already do this quiz.", "Your request");
       this.toast.presentToast(await this.translateService.get('already_do_quiz').toPromise());
     }
     else{
+
       this.play.playOnHover();
       this.clicked = false;
       this.router.navigate(['/quiz'], { queryParams: {
